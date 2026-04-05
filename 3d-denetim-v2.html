@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="3D Denetim">
+<meta name="theme-color" content="#080C18">
+<title>3D Denetim — FNSS / TEKNOKAR</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080C18;
+  --s1: #0E1525;
+  --s2: #151D2E;
+  --s3: #1C2640;
+  --brd: rgba(186,160,72,0.07);
+  --brd2: rgba(186,160,72,0.14);
+  --brd3: rgba(186,160,72,0.25);
+  --gold: #BAA048;
+  --gold-l: #D4BE6A;
+  --gold-bg: rgba(186,160,72,0.08);
+  --gold-bg2: rgba(186,160,72,0.14);
+  --txt: #E4E0D6;
+  --txt2: #8E8A7E;
+  --txt3: #56524A;
+  --grn: #5CE0A0;
+  --grn-bg: rgba(92,224,160,0.08);
+  --red: #F07070;
+  --red-bg: rgba(240,112,112,0.08);
+  --r: 14px;
+  --sab: env(safe-area-inset-bottom, 0px);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{background:var(--bg);}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--txt);min-height:100dvh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+
+/* ══ HEADER ══ */
+.hdr{position:sticky;top:0;z-index:50;background:rgba(8,12,24,0.9);backdrop-filter:blur(24px) saturate(1.6);-webkit-backdrop-filter:blur(24px) saturate(1.6);border-bottom:1px solid var(--brd);padding:14px 20px;display:flex;justify-content:space-between;align-items:center;}
+.hdr-brand{display:flex;align-items:center;gap:10px;}
+.hdr-logo{width:32px;height:32px;border:1.5px solid var(--gold);border-radius:7px;display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--gold);}
+.hdr-t1{font-size:13px;font-weight:700;letter-spacing:0.05em;color:var(--txt);}
+.hdr-t2{font-size:8.5px;font-weight:500;letter-spacing:0.12em;color:var(--txt3);text-transform:uppercase;}
+.hdr-badge{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--gold);background:var(--gold-bg);padding:5px 12px;border-radius:100px;border:1px solid var(--brd2);}
+
+/* ══ TABS ══ */
+/* Serial Position Effect: "Giriş" first (primary task), "Aktar" last (final action) */
+/* Hick's Law: only 3 tabs */
+/* Fitts's Law: generous padding */
+.tabs{display:flex;background:var(--s1);border-bottom:1px solid var(--brd);position:sticky;top:61px;z-index:49;}
+.tab{flex:1;padding:15px 0;text-align:center;font-size:12px;font-weight:600;letter-spacing:0.05em;color:var(--txt3);background:none;border:none;border-bottom:2.5px solid transparent;cursor:pointer;transition:all 0.2s;text-transform:uppercase;}
+.tab.on{color:var(--gold);border-bottom-color:var(--gold);background:var(--gold-bg);}
+
+/* ══ SESSION BAR — Goal-Gradient Effect ══ */
+.session{background:var(--s1);border-bottom:1px solid var(--brd);padding:10px 20px;display:flex;justify-content:space-between;align-items:center;}
+.session-date{font-size:11px;color:var(--txt3);font-weight:500;}
+.session-count{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:var(--grn);}
+/* Zeigarnik Effect: unsaved indicator */
+.session-unsaved{font-size:10px;font-weight:700;color:var(--gold-l);background:var(--gold-bg2);padding:3px 10px;border-radius:100px;animation:pulse 1.5s ease infinite;display:none;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
+
+/* ══ MAIN ══ */
+.main{padding:0 0 calc(20px + var(--sab));max-width:520px;margin:0 auto;}
+.tc{display:none;}.tc.on{display:block;}
+
+/* ══ FORM SECTIONS — Law of Common Region: bordered groups ══ */
+.fsec{margin:16px 16px 0;background:var(--s1);border:1px solid var(--brd);border-radius:var(--r);padding:20px 18px;position:relative;}
+.fsec-head{font-size:9.5px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--txt3);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.fsec-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);opacity:0.5;}
+
+/* ══ INPUTS ══ */
+/* Law of Proximity: label tight to input (6px gap) */
+/* Postel's Law: no rigid format required */
+.fg{margin-bottom:14px;}.fg:last-child{margin-bottom:0;}
+.fl{display:block;font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--txt3);margin-bottom:6px;}
+.fi{width:100%;padding:13px 14px;background:var(--s2);border:1px solid var(--brd);border-radius:10px;color:var(--txt);font-size:16px;font-family:'Sora',sans-serif;outline:none;transition:border-color 0.2s;-webkit-appearance:none;}
+.fi:focus{border-color:var(--gold);}
+.fi::placeholder{color:var(--txt3);}
+.fi.mono{font-family:'JetBrains Mono',monospace;font-size:15px;letter-spacing:0.04em;}
+
+/* ══ ARA / SON TOGGLE — Hick's Law: 2 choices only ══ */
+/* Von Restorff Effect: selected type glows distinctly */
+/* Fitts's Law: very large touch targets */
+.toggle-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.toggle-btn{padding:18px;text-align:center;background:var(--s2);border:1.5px solid var(--brd);border-radius:12px;font-family:'Sora',sans-serif;font-size:18px;font-weight:800;letter-spacing:0.08em;color:var(--txt3);cursor:pointer;transition:all 0.15s;position:relative;overflow:hidden;}
+.toggle-btn.on{color:var(--bg);background:var(--gold);border-color:var(--gold);}
+.toggle-btn.on::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,0.1) 0%,transparent 60%);pointer-events:none;}
+.toggle-btn:active{transform:scale(0.97);}
+
+/* ══ QUANTITY ROW — Chunking: 3 items grouped ══ */
+/* Working Memory: 3 numbers, well within limits */
+.qty-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+.qty-box{text-align:center;}
+.qty-box .fl{text-align:center;}
+.qty-input-wrap{position:relative;}
+.qty-input{width:100%;text-align:center;font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;padding:18px 8px;background:var(--s2);border:1px solid var(--brd);border-radius:12px;color:var(--txt);outline:none;transition:all 0.2s;-webkit-appearance:none;-moz-appearance:textfield;}
+.qty-input::-webkit-inner-spin-button,.qty-input::-webkit-outer-spin-button{-webkit-appearance:none;}
+.qty-input:focus{border-color:var(--gold);}
+/* Auto-calculated field glow */
+.qty-box.auto .qty-input{background:var(--gold-bg);border-color:var(--brd2);color:var(--gold-l);}
+.qty-box.iade-red .qty-input{background:var(--red-bg);border-color:rgba(240,112,112,0.15);color:var(--red);}
+.qty-tag{font-size:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--txt3);margin-top:6px;}
+.qty-tag.auto-tag{color:var(--gold);opacity:0.7;}
+
+/* ══ Stepper Buttons — Fitts's Law: easy increment ══ */
+.steppers{display:flex;justify-content:center;gap:6px;margin-top:8px;}
+.step-btn{width:36px;height:30px;border-radius:8px;border:1px solid var(--brd);background:var(--s2);color:var(--txt2);font-size:16px;font-weight:600;font-family:'JetBrains Mono',monospace;cursor:pointer;display:grid;place-items:center;transition:all 0.12s;}
+.step-btn:active{background:var(--gold-bg);border-color:var(--brd2);color:var(--gold);}
+
+/* ══ SAVE BUTTON ══ */
+/* Fitts's Law: full width, tall */
+/* Von Restorff: gold stands out on dark */
+.save-area{padding:16px 16px 0;}
+.save-btn{width:100%;padding:18px;border:none;border-radius:var(--r);background:var(--gold);color:var(--bg);font-family:'Sora',sans-serif;font-size:15px;font-weight:800;letter-spacing:0.04em;cursor:pointer;transition:all 0.12s;display:flex;align-items:center;justify-content:center;gap:10px;min-height:58px;position:relative;overflow:hidden;}
+.save-btn:active{transform:scale(0.98);filter:brightness(0.9);}
+/* Peak-End Rule: save flash animation */
+.save-btn.flash{animation:saveflash 0.5s ease;}
+@keyframes saveflash{0%{filter:brightness(1);}30%{filter:brightness(1.4);}100%{filter:brightness(1);}}
+
+/* ══ RECORDS ══ */
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);background:var(--s1);border-bottom:1px solid var(--brd);padding:14px 20px;}
+.stat-c{text-align:center;}
+.stat-v{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--gold-l);}
+.stat-v.green{color:var(--grn);}
+.stat-v.red{color:var(--red);}
+.stat-l{font-size:8.5px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--txt3);margin-top:3px;}
+
+/* Filter pills — Selective Attention: active filter highlighted */
+/* Miller's Law: only 3 filter options */
+.filters{display:flex;gap:8px;padding:14px 16px;border-bottom:1px solid var(--brd);}
+.filter-pill{padding:8px 16px;border-radius:100px;font-size:11px;font-weight:600;letter-spacing:0.04em;color:var(--txt3);background:var(--s1);border:1px solid var(--brd);cursor:pointer;transition:all 0.15s;font-family:'Sora',sans-serif;}
+.filter-pill.on{color:var(--gold);background:var(--gold-bg);border-color:var(--brd2);}
+
+/* Record cards — Law of Similarity: all identical structure */
+/* Law of Uniform Connectedness: same border = related */
+.recs{padding:10px 16px;}
+.rec{background:var(--s1);border:1px solid var(--brd);border-radius:var(--r);padding:16px;margin-bottom:10px;transition:all 0.15s;}
+.rec:active{background:var(--s2);}
+.rec-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
+.rec-name{font-size:15px;font-weight:700;color:var(--txt);line-height:1.25;}
+.rec-sub{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--txt3);margin-top:3px;letter-spacing:0.02em;}
+.badge{font-size:9px;font-weight:800;letter-spacing:0.06em;padding:4px 10px;border-radius:6px;text-transform:uppercase;white-space:nowrap;}
+.badge.ok{background:var(--grn-bg);color:var(--grn);}
+.badge.iade{background:var(--red-bg);color:var(--red);}
+.badge.ara{background:rgba(120,160,255,0.08);color:rgb(120,160,255);}
+.badge.son{background:rgba(200,140,255,0.08);color:rgb(200,140,255);}
+.rec-nums{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;}
+.rn-label{font-size:8px;color:var(--txt3);text-transform:uppercase;letter-spacing:0.1em;font-weight:600;}
+.rn-val{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;color:var(--txt);}
+.rn-val.rv{color:var(--red);}
+.rec-foot{display:flex;gap:8px;padding-top:10px;border-top:1px solid var(--brd);}
+.rec-btn{flex:1;padding:10px;border-radius:8px;border:1px solid var(--brd);background:none;font-size:10px;font-weight:700;color:var(--txt2);font-family:'Sora',sans-serif;cursor:pointer;transition:all 0.12s;letter-spacing:0.04em;text-transform:uppercase;}
+.rec-btn:active{background:var(--s2);}
+.rec-btn.del{color:var(--red);border-color:rgba(240,112,112,0.08);}
+.rec-time{font-size:9px;color:var(--txt3);margin-top:6px;}
+
+/* ══ EXPORT ══ */
+.exp-area{padding:16px;}
+.exp-card{background:var(--s1);border:1px solid var(--brd);border-radius:var(--r);padding:28px 22px;text-align:center;}
+.exp-ic{font-size:44px;margin-bottom:14px;}
+.exp-tt{font-size:19px;font-weight:800;margin-bottom:6px;}
+.exp-desc{font-size:12px;color:var(--txt3);line-height:1.7;margin-bottom:22px;}
+.exp-btns{display:flex;flex-direction:column;gap:10px;}
+.btn-exp{width:100%;padding:16px;border-radius:var(--r);font-family:'Sora',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.12s;display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;letter-spacing:0.02em;border:none;}
+.btn-exp:active{transform:scale(0.98);}
+.btn-exp.pri{background:var(--gold);color:var(--bg);}
+.btn-exp.sec{background:var(--s2);color:var(--txt2);border:1px solid var(--brd);}
+.btn-exp.dan{background:var(--red-bg);color:var(--red);border:1px solid rgba(240,112,112,0.1);}
+
+/* Preview table */
+.prev-wrap{margin-top:18px;background:var(--s1);border:1px solid var(--brd);border-radius:var(--r);overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.prev-t{width:100%;border-collapse:collapse;white-space:nowrap;font-size:10px;}
+.prev-t th{padding:10px 10px;text-align:left;font-size:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--brd);}
+.prev-t td{padding:8px 10px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--txt2);border-bottom:1px solid var(--brd);}
+.prev-t td.n{font-family:'Sora',sans-serif;font-weight:600;color:var(--txt);}
+
+/* ══ EMPTY ══ */
+.empty{text-align:center;padding:50px 20px;color:var(--txt3);}
+.empty-ic{font-size:36px;margin-bottom:10px;opacity:0.35;}
+.empty-tx{font-size:13px;line-height:1.6;}
+
+/* ══ TOAST — Doherty Threshold: appears < 200ms ══ */
+.toast{position:fixed;bottom:calc(30px + var(--sab));left:50%;transform:translateX(-50%) translateY(16px);background:var(--gold);color:var(--bg);padding:12px 28px;border-radius:100px;font-size:13px;font-weight:700;opacity:0;pointer-events:none;transition:all 0.2s ease;z-index:200;white-space:nowrap;box-shadow:0 8px 30px rgba(186,160,72,0.2);}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ══ SAVE SUCCESS OVERLAY — Peak-End Rule ══ */
+.success-flash{position:fixed;inset:0;background:rgba(92,224,160,0.06);pointer-events:none;opacity:0;transition:opacity 0.15s;z-index:100;}
+.success-flash.on{opacity:1;}
+
+/* Scroll */
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:rgba(186,160,72,0.15);border-radius:2px;}
+::selection{background:rgba(186,160,72,0.25);color:var(--txt);}
+</style>
+</head>
+<body>
+
+<!-- Success Flash Overlay (Peak-End Rule) -->
+<div class="success-flash" id="successFlash"></div>
+
+<!-- HEADER -->
+<!-- Jakob's Law: standard app header pattern -->
+<header class="hdr">
+  <div class="hdr-brand">
+    <div class="hdr-logo">3D</div>
+    <div>
+      <div class="hdr-t1">FNSS → TEKNOKAR</div>
+      <div class="hdr-t2">Dış Denetim Kayıt</div>
+    </div>
+  </div>
+  <div class="hdr-badge" id="hBadge">0</div>
+</header>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab on" data-t="form" onclick="goTab('form')">＋ Giriş</button>
+  <button class="tab" data-t="recs" onclick="goTab('recs')">Kayıtlar</button>
+  <button class="tab" data-t="exp" onclick="goTab('exp')">Aktar</button>
+</div>
+
+<!-- SESSION BAR -->
+<div class="session" id="sessionBar">
+  <span class="session-date" id="sDate"></span>
+  <span class="session-unsaved" id="unsavedTag">● Kaydedilmedi</span>
+  <span class="session-count" id="sCount">Bugün: 0 denetim</span>
+</div>
+
+<!-- ═══════════════════ FORM TAB ═══════════════════ -->
+<div class="main">
+<div class="tc on" id="tc-form">
+
+  <!-- Parça Bilgileri — Law of Common Region: bounded card -->
+  <!-- Chunking: related fields grouped -->
+  <div class="fsec">
+    <div class="fsec-head"><span class="fsec-dot"></span> Parça Bilgileri</div>
+    <div class="fg">
+      <label class="fl" for="fAdi">Parça Adı</label>
+      <!-- Postel's Law: flexible input, no format enforced -->
+      <input class="fi" id="fAdi" type="text" placeholder="ör: Bağlantı Flanşı" autocomplete="off" oninput="markDirty()">
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div class="fg">
+        <label class="fl" for="fNo">Parça No</label>
+        <input class="fi mono" id="fNo" type="text" placeholder="FN-3842-A" autocomplete="off" oninput="markDirty()">
+      </div>
+      <div class="fg">
+        <label class="fl" for="fRev">Revizyon</label>
+        <input class="fi mono" id="fRev" type="text" placeholder="Rev.C" autocomplete="off" oninput="markDirty()">
+      </div>
+    </div>
+    <div class="fg">
+      <label class="fl" for="fSip">Sipariş No</label>
+      <input class="fi mono" id="fSip" type="text" placeholder="SIP-2026-0154" autocomplete="off" oninput="markDirty()">
+    </div>
+  </div>
+
+  <!-- Denetim Türü — Hick's Law: only 2 options -->
+  <!-- Von Restorff: selected glows -->
+  <div class="fsec">
+    <div class="fsec-head"><span class="fsec-dot"></span> Denetim Türü</div>
+    <div class="toggle-row">
+      <button class="toggle-btn" id="tAra" onclick="pickType('ARA')">ARA</button>
+      <button class="toggle-btn" id="tSon" onclick="pickType('SON')">SON</button>
+    </div>
+  </div>
+
+  <!-- Miktar — Chunking: 3 numbers together -->
+  <!-- Cognitive Load: auto-calculate iade reduces mental work -->
+  <!-- Working Memory: 3 values, well within 7±2 -->
+  <div class="fsec">
+    <div class="fsec-head"><span class="fsec-dot"></span> Miktar Bilgileri</div>
+    <div class="qty-row">
+      <div class="qty-box" id="qSun">
+        <label class="fl">Sunulan</label>
+        <div class="qty-input-wrap">
+          <input class="qty-input" id="fSun" type="number" inputmode="numeric" pattern="[0-9]*" value="" placeholder="0" oninput="calc();markDirty()">
+        </div>
+        <div class="steppers">
+          <button class="step-btn" onclick="step('fSun',-1)">−</button>
+          <button class="step-btn" onclick="step('fSun',1)">+</button>
+        </div>
+      </div>
+      <div class="qty-box" id="qUyg">
+        <label class="fl">Uygun</label>
+        <div class="qty-input-wrap">
+          <input class="qty-input" id="fUyg" type="number" inputmode="numeric" pattern="[0-9]*" value="" placeholder="0" oninput="calc();markDirty()">
+        </div>
+        <div class="steppers">
+          <button class="step-btn" onclick="step('fUyg',-1)">−</button>
+          <button class="step-btn" onclick="step('fUyg',1)">+</button>
+        </div>
+      </div>
+      <div class="qty-box auto" id="qIade">
+        <label class="fl">İade</label>
+        <div class="qty-input-wrap">
+          <input class="qty-input" id="fIade" type="number" value="0" readonly>
+        </div>
+        <div class="qty-tag auto-tag">⚡ Otomatik</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Save Button -->
+  <div class="save-area">
+    <button class="save-btn" id="saveBtn" onclick="save()">
+      <span>KAYDET & YENİ</span>
+      <span style="font-size:20px">→</span>
+    </button>
+  </div>
+
+</div>
+
+<!-- ═══════════════════ RECORDS TAB ═══════════════════ -->
+<div class="tc" id="tc-recs">
+  <!-- Pareto Principle: stats show 80/20 at a glance -->
+  <div class="stats-grid" id="statsGrid">
+    <div class="stat-c"><div class="stat-v" id="svTot">0</div><div class="stat-l">Sunulan</div></div>
+    <div class="stat-c"><div class="stat-v green" id="svOk">0</div><div class="stat-l">Uygun</div></div>
+    <div class="stat-c"><div class="stat-v red" id="svRet">0</div><div class="stat-l">İade</div></div>
+  </div>
+
+  <!-- Filters — Selective Attention: active filter pops -->
+  <div class="filters">
+    <button class="filter-pill on" data-f="all" onclick="setFilter('all')">Tümü</button>
+    <button class="filter-pill" data-f="ARA" onclick="setFilter('ARA')">Ara</button>
+    <button class="filter-pill" data-f="SON" onclick="setFilter('SON')">Son</button>
+  </div>
+
+  <div class="recs" id="recsList"></div>
+</div>
+
+<!-- ═══════════════════ EXPORT TAB ═══════════════════ -->
+<div class="tc" id="tc-exp">
+  <div class="exp-area">
+    <div class="exp-card">
+      <div class="exp-ic">📊</div>
+      <div class="exp-tt">Excel'e Aktar</div>
+      <div class="exp-desc">Tüm denetim verilerinizi CSV olarak indirin<br>veya panoya kopyalayıp Excel'e yapıştırın.</div>
+      <div class="exp-btns">
+        <button class="btn-exp pri" onclick="dlCSV()">↓ &nbsp;CSV İndir</button>
+        <button class="btn-exp sec" onclick="copyAll()">📋 &nbsp;Tümünü Kopyala</button>
+        <button class="btn-exp dan" onclick="clearAll()">✕ &nbsp;Kayıtları Sil</button>
+      </div>
+    </div>
+    <div style="margin-top:16px;">
+      <div style="font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--txt3);margin-bottom:8px;padding-left:2px;">Tablo Önizleme</div>
+      <div class="prev-wrap">
+        <table class="prev-t">
+          <thead>
+            <tr><th>Adı</th><th>No</th><th>Sipariş</th><th>Rev</th><th>Tür</th><th>Sun</th><th>Uyg</th><th>İade</th></tr>
+          </thead>
+          <tbody id="prevBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════
+let R=[], type='', filter='all', dirty=false;
+try{const s=localStorage.getItem('3dd_r');if(s)R=JSON.parse(s);}catch(e){}
+
+// ═══ INIT ═══
+(function init(){
+  updBadge(); updSession();
+  document.getElementById('sDate').textContent=new Date().toLocaleDateString('tr-TR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+})();
+
+// ═══ TABS ═══
+// Flow: smooth transition, no jarring changes
+function goTab(t){
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+  document.querySelector(`[data-t="${t}"]`).classList.add('on');
+  document.querySelectorAll('.tc').forEach(x=>x.classList.remove('on'));
+  document.getElementById('tc-'+t).classList.add('on');
+  if(t==='recs')renderRecs();
+  if(t==='exp')renderPrev();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ═══ TYPE TOGGLE ═══
+function pickType(t){
+  type=t;
+  document.getElementById('tAra').classList.toggle('on',t==='ARA');
+  document.getElementById('tSon').classList.toggle('on',t==='SON');
+  if(navigator.vibrate)navigator.vibrate(8);
+  markDirty();
+}
+
+// ═══ QUANTITY CALC ═══
+// Cognitive Load: auto-calculate reduces mental effort
+function calc(){
+  const s=p('fSun'),u=p('fUyg'),iade=Math.max(0,s-u);
+  document.getElementById('fIade').value=iade;
+  const q=document.getElementById('qIade');
+  if(iade>0){q.classList.add('iade-red');q.classList.remove('auto');}
+  else{q.classList.remove('iade-red');q.classList.add('auto');}
+}
+function p(id){return parseInt(document.getElementById(id).value)||0;}
+
+// Stepper — Fitts's Law: big easy targets for ±
+function step(id,d){
+  const el=document.getElementById(id);
+  el.value=Math.max(0,(parseInt(el.value)||0)+d);
+  calc(); markDirty();
+  if(navigator.vibrate)navigator.vibrate(6);
+}
+
+// ═══ DIRTY / UNSAVED — Zeigarnik Effect ═══
+// Incomplete entries nag until saved
+function markDirty(){
+  dirty=true;
+  document.getElementById('unsavedTag').style.display='inline';
+}
+function clearDirty(){
+  dirty=false;
+  document.getElementById('unsavedTag').style.display='none';
+}
+
+// ═══ SAVE ═══
+// Peak-End Rule: satisfying flash + toast on save
+function save(){
+  const adi=v('fAdi'),no=v('fNo'),sip=v('fSip'),rev=v('fRev');
+  const sun=p('fSun'),uyg=p('fUyg'),iade=Math.max(0,sun-uyg);
+
+  if(!adi){toast('⚠ Parça adı girin');document.getElementById('fAdi').focus();return;}
+  if(!type){toast('⚠ ARA veya SON seçin');return;}
+  if(sun<=0){toast('⚠ Sunulan miktar girin');document.getElementById('fSun').focus();return;}
+
+  R.unshift({id:Date.now(),parcaAdi:adi,parcaNo:no,siparisNo:sip,revizyon:rev,tur:type,sunulan:sun,uygun:uyg,iade:iade,tarih:new Date().toLocaleString('tr-TR')});
+  persist(); updBadge(); updSession();
+
+  // Peak-End: green flash
+  const fl=document.getElementById('successFlash');
+  fl.classList.add('on');
+  setTimeout(()=>fl.classList.remove('on'),300);
+
+  // Button flash
+  document.getElementById('saveBtn').classList.add('flash');
+  setTimeout(()=>document.getElementById('saveBtn').classList.remove('flash'),500);
+
+  clearForm(); clearDirty();
+  toast('✓ Kayıt eklendi');
+  if(navigator.vibrate)navigator.vibrate([12,40,12]);
+
+  // Flow: auto-focus first field for next entry
+  setTimeout(()=>document.getElementById('fAdi').focus(),120);
+}
+
+function v(id){return document.getElementById(id).value.trim();}
+
+function clearForm(){
+  ['fAdi','fNo','fSip','fRev','fSun','fUyg'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('fIade').value='0';
+  document.getElementById('qIade').classList.remove('iade-red');
+  document.getElementById('qIade').classList.add('auto');
+  // Parkinson's Law: keep type selected — usually same throughout session
+}
+
+// ═══ RECORDS ═══
+// Law of Similarity: identical card structure
+// Law of Uniform Connectedness: same border = related set
+function renderRecs(){
+  const list=document.getElementById('recsList');
+  const filtered=filter==='all'?R:R.filter(r=>r.tur===filter);
+
+  // Stats — Pareto: quick overview of totals
+  const tS=R.reduce((a,r)=>a+r.sunulan,0);
+  const tU=R.reduce((a,r)=>a+r.uygun,0);
+  const tI=R.reduce((a,r)=>a+r.iade,0);
+  document.getElementById('svTot').textContent=tS;
+  document.getElementById('svOk').textContent=tU;
+  document.getElementById('svRet').textContent=tI;
+
+  if(filtered.length===0){
+    list.innerHTML='<div class="empty"><div class="empty-ic">📋</div><div class="empty-tx">'+(R.length===0?'Henüz kayıt yok.<br>Giriş sekmesinden başlayın.':'Bu filtrede kayıt yok.')+'</div></div>';
+    return;
+  }
+
+  list.innerHTML=filtered.map((r,i)=>{
+    const ok=r.iade===0;
+    const idx=R.indexOf(r);
+    return `<div class="rec">
+      <div class="rec-top">
+        <div>
+          <div class="rec-name">${esc(r.parcaAdi)}</div>
+          <div class="rec-sub">${esc(r.parcaNo)}${r.siparisNo?' · '+esc(r.siparisNo):''}${r.revizyon?' · '+esc(r.revizyon):''}</div>
+        </div>
+        <div style="display:flex;gap:5px;">
+          <span class="badge ${r.tur==='ARA'?'ara':'son'}">${r.tur}</span>
+          <span class="badge ${ok?'ok':'iade'}">${ok?'✓ Tam':'↩ İade'}</span>
+        </div>
+      </div>
+      <div class="rec-nums">
+        <div><div class="rn-label">Sunulan</div><div class="rn-val">${r.sunulan}</div></div>
+        <div><div class="rn-label">Uygun</div><div class="rn-val">${r.uygun}</div></div>
+        <div><div class="rn-label">İade</div><div class="rn-val ${r.iade>0?'rv':''}">${r.iade}</div></div>
+      </div>
+      <div class="rec-time">${r.tarih}</div>
+      <div class="rec-foot">
+        <button class="rec-btn" onclick="copyRow(${idx})">📋 KOPYALA</button>
+        <button class="rec-btn del" onclick="delRec(${idx})">✕ SİL</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ═══ FILTER ═══
+function setFilter(f){
+  filter=f;
+  document.querySelectorAll('.filter-pill').forEach(x=>x.classList.toggle('on',x.dataset.f===f));
+  renderRecs();
+}
+
+// ═══ COPY ROW ═══
+function copyRow(i){
+  const r=R[i];
+  const row=[r.parcaAdi,r.parcaNo,r.siparisNo,r.revizyon,r.tur,r.sunulan,r.uygun,r.iade].join('\t');
+  cpToClip(row); toast('📋 Satır kopyalandı');
+}
+
+// ═══ DELETE ═══
+function delRec(i){R.splice(i,1);persist();updBadge();updSession();renderRecs();toast('Silindi');}
+
+// ═══ EXPORT ═══
+function dlCSV(){
+  if(!R.length){toast('⚠ Kayıt yok');return;}
+  const BOM='\uFEFF';
+  const h='Parça Adı;Parça Numarası;Sipariş Numarası;Revizyon;Denetim Türü;Sunulan;Uygun;İade;Tarih\n';
+  const rows=R.map(r=>`${r.parcaAdi};${r.parcaNo};${r.siparisNo};${r.revizyon};${r.tur};${r.sunulan};${r.uygun};${r.iade};${r.tarih}`).join('\n');
+  const blob=new Blob([BOM+h+rows],{type:'text/csv;charset=utf-8;'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`FNSS_TEKNOKAR_${new Date().toISOString().split('T')[0]}.csv`;
+  a.click(); URL.revokeObjectURL(a.href);
+  toast('✓ CSV indirildi');
+}
+
+function copyAll(){
+  if(!R.length){toast('⚠ Kayıt yok');return;}
+  const h='Parça Adı\tParça No\tSipariş No\tRevizyon\tTür\tSunulan\tUygun\tİade';
+  const rows=R.map(r=>[r.parcaAdi,r.parcaNo,r.siparisNo,r.revizyon,r.tur,r.sunulan,r.uygun,r.iade].join('\t'));
+  cpToClip(h+'\n'+rows.join('\n'));
+  toast('📋 Tümü kopyalandı — Excel\'e yapıştır');
+}
+
+function clearAll(){
+  if(!confirm('Tüm kayıtlar silinecek. Emin misiniz?'))return;
+  R=[];persist();updBadge();updSession();renderPrev();toast('Tüm kayıtlar silindi');
+}
+
+function renderPrev(){
+  const tb=document.getElementById('prevBody');
+  if(!R.length){tb.innerHTML='<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--txt3);">—</td></tr>';return;}
+  tb.innerHTML=R.slice(0,25).map(r=>`<tr>
+    <td class="n">${esc(r.parcaAdi)}</td><td>${esc(r.parcaNo)}</td><td>${esc(r.siparisNo)}</td>
+    <td>${esc(r.revizyon)}</td><td>${r.tur}</td>
+    <td style="text-align:center">${r.sunulan}</td><td style="text-align:center;color:var(--grn)">${r.uygun}</td>
+    <td style="text-align:center;color:${r.iade>0?'var(--red)':'var(--txt3)'};font-weight:${r.iade>0?'700':'400'}">${r.iade}</td>
+  </tr>`).join('');
+}
+
+// ═══ UTILS ═══
+function persist(){try{localStorage.setItem('3dd_r',JSON.stringify(R));}catch(e){}}
+function updBadge(){document.getElementById('hBadge').textContent=R.length;}
+function updSession(){
+  const today=new Date().toDateString();
+  const c=R.filter(r=>{try{const d=new Date(r.tarih.split(' ')[0].split('.').reverse().join('-'));return d.toDateString()===today;}catch(e){return false;}}).length;
+  document.getElementById('sCount').textContent='Bugün: '+c+' denetim';
+}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),2200);}
+function esc(s){const d=document.createElement('div');d.textContent=s||'—';return d.innerHTML;}
+function cpToClip(txt){
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).catch(()=>fbCopy(txt));}
+  else{fbCopy(txt);}
+}
+function fbCopy(t){const a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;left:-9999px';document.body.appendChild(a);a.select();document.execCommand('copy');document.body.removeChild(a);}
+</script>
+</body>
+</html>
