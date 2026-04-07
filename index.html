@@ -9,29 +9,30 @@
 <meta name="apple-mobile-web-app-title" content="3D Denetim">
 <meta name="theme-color" content="#000000">
 <title>3D Denetim — FNSS / TEKNOKAR</title>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 /*
   ═══════════════════════════════════════════
-  APPLE DARK MODE COLOR SYSTEM + SAGE/TERRACOTTA
+  APPLE iOS NATIVE SYSTEM COLORS
+  Exactly what Apple Mail, Twitter, Midas use
 
-Based on Apple Human Interface Guidelines
-Dark Mode (Elevated) color values:
+System Blue:   #007AFF  (primary actions)
+System Green:  #30D158  (success / tam)
+System Red:    #FF453A  (alert / iade)
+System Orange: #FF9F0A  (warnings)
 
-Background:  #000000  (OLED true black — base)
-Surface 1:   #1C1C1E  (elevated — cards, sections)
-Surface 2:   #2C2C2E  (secondary elevated — inputs, interactive)
-Surface 3:   #3A3A3C  (tertiary — hover, active)
+Dark Mode Surfaces (Apple HIG):
+Background:    #000000
+Primary:       #1C1C1E
+Secondary:     #2C2C2E  
+Tertiary:      #3A3A3C
+Separator:     #38383A
 
-Text:
-Primary:     #FFFFFF  (labels, headlines — full white)
-Secondary:   #8E8E93  (descriptions, subtitles)
-Tertiary:    #48484A  (placeholders, disabled)
-
-Separators:  #38383A  (opaque separator)
-
-Accent:      #7FBFAE  (sage — slightly boosted)
-Alert:       #D4806E  (terracotta — slightly boosted)
+Text (Apple HIG):
+Primary:       #FFFFFF
+Secondary:     #EBEBF5 99 → #98989F
+Tertiary:      #EBEBF5 4C → #6C6C70
+Quaternary:    #48484A
 ═══════════════════════════════════════════
 */
 :root{
@@ -40,79 +41,79 @@ Alert:       #D4806E  (terracotta — slightly boosted)
 –s2:#2C2C2E;
 –s3:#3A3A3C;
 –sep:#38383A;
+–blue:#007AFF;
+–blue-d:rgba(0,122,255,0.12);
+–blue-m:rgba(0,122,255,0.22);
+–green:#30D158;
+–green-d:rgba(48,209,88,0.12);
+–red:#FF453A;
+–red-d:rgba(255,69,58,0.12);
 –t0:#FFFFFF;
-–t1:#8E8E93;
-–t2:#48484A;
-–ac:#7FBFAE;
-–ac-d:rgba(127,191,174,0.14);
-–ac-m:rgba(127,191,174,0.24);
-–ac-hi:rgba(127,191,174,0.35);
-–al:#D4806E;
-–al-d:rgba(212,128,110,0.14);
-–al-m:rgba(212,128,110,0.24);
-–r:14px;
+–t1:#98989F;
+–t2:#6C6C70;
+–t3:#48484A;
+–r:12px;
 –sab:env(safe-area-inset-bottom,0px);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-html,body{background:var(–k);color:var(–t0);font-family:‘Instrument Sans’,sans-serif;min-height:100dvh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+html,body{background:var(–k);color:var(–t0);font-family:‘Inter’,-apple-system,sans-serif;min-height:100dvh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
 
 /* ═══ HEADER ═══ */
 .hdr{
 position:sticky;top:0;z-index:60;
-background:rgba(28,28,30,0.88);
-backdrop-filter:blur(32px) saturate(1.8);
--webkit-backdrop-filter:blur(32px) saturate(1.8);
-border-bottom:1px solid var(–sep);
-padding:16px 20px;
+background:rgba(28,28,30,0.92);
+backdrop-filter:blur(40px) saturate(1.8);
+-webkit-backdrop-filter:blur(40px) saturate(1.8);
+border-bottom:0.5px solid var(–sep);
+padding:14px 20px;
 display:flex;justify-content:space-between;align-items:center;
 }
 .hdr-brand{display:flex;align-items:center;gap:12px;}
 .hdr-logo{
 width:36px;height:36px;
-background:var(–ac);color:var(–k);
+background:var(–blue);color:var(–t0);
 border-radius:9px;
 display:grid;place-items:center;
-font-family:‘DM Mono’,monospace;
-font-size:12px;font-weight:500;
-box-shadow:0 2px 8px rgba(127,191,174,0.2);
+font-size:13px;font-weight:800;
+letter-spacing:-0.02em;
 }
-.hdr-t1{font-size:14px;font-weight:700;letter-spacing:0.04em;color:var(–t0);}
-.hdr-t2{font-size:9px;font-weight:500;letter-spacing:0.12em;color:var(–t1);text-transform:uppercase;margin-top:1px;}
+.hdr-t1{font-size:15px;font-weight:700;color:var(–t0);letter-spacing:-0.01em;}
+.hdr-t2{font-size:11px;font-weight:500;color:var(–t1);margin-top:1px;}
 .hdr-n{
-font-family:‘DM Mono’,monospace;
-font-size:13px;font-weight:500;color:var(–t0);
-background:var(–s2);
+font-size:15px;font-weight:700;color:var(–blue);
+background:var(–blue-d);
 padding:6px 14px;border-radius:99px;
 }
 
 /* ═══ TABS ═══ */
 .tabs{
 display:flex;background:var(–s1);
-border-bottom:1px solid var(–sep);
-position:sticky;top:69px;z-index:55;
+border-bottom:0.5px solid var(–sep);
+position:sticky;top:65px;z-index:55;
+padding:0 16px;
 }
 .tab{
-flex:1;padding:16px 0;text-align:center;
-font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
-color:var(–t1);background:none;border:none;
+flex:1;padding:12px 0;text-align:center;
+font-size:13px;font-weight:600;
+color:var(–t2);background:none;border:none;
 border-bottom:2.5px solid transparent;
 cursor:pointer;transition:all 0.15s;
 }
-.tab.on{color:var(–ac);border-bottom-color:var(–ac);background:rgba(127,191,174,0.04);}
+.tab.on{color:var(–blue);border-bottom-color:var(–blue);}
 
 /* ═══ SESSION ═══ */
 .sess{
 background:var(–s1);
-border-bottom:1px solid var(–sep);
-padding:12px 20px;
+border-bottom:0.5px solid var(–sep);
+padding:10px 20px;
 display:flex;justify-content:space-between;align-items:center;
 }
-.sess-date{font-size:12px;color:var(–t1);}
-.sess-count{font-family:‘DM Mono’,monospace;font-size:12px;font-weight:500;color:var(–ac);}
+.sess-date{font-size:13px;color:var(–t2);}
+.sess-count{font-size:13px;font-weight:600;color:var(–blue);}
 .sess-unsaved{
-font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
-color:var(–al);background:var(–al-d);
-padding:5px 12px;border-radius:99px;
+font-size:11px;font-weight:700;
+color:var(–red);background:var(–red-d);
+padding:4px 12px;border-radius:99px;
 animation:pulse 2s ease infinite;display:none;
 }
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
@@ -121,221 +122,222 @@ animation:pulse 2s ease infinite;display:none;
 .main{padding:0 0 calc(24px + var(–sab));max-width:520px;margin:0 auto;}
 .tc{display:none;}.tc.on{display:block;}
 
-/* ═══ CARDS ═══ */
+/* ═══ SECTION HEADERS — iOS Grouped Style ═══ */
+.sec-title{
+font-size:13px;font-weight:600;color:var(–t1);
+text-transform:uppercase;
+padding:20px 20px 8px;
+}
+
+/* ═══ CARDS — iOS Grouped TableView Style ═══ */
 .card{
-margin:14px 16px 0;
+margin:0 16px 0;
 background:var(–s1);
-border:1px solid var(–sep);
 border-radius:var(–r);
-padding:22px 18px;
+overflow:hidden;
 }
-.card-head{
-font-size:11px;font-weight:700;
-letter-spacing:0.1em;text-transform:uppercase;
-color:var(–t1);margin-bottom:16px;
-display:flex;align-items:center;gap:8px;
+.card+.card{margin-top:0;}
+.card-row{
+padding:14px 16px;
+border-bottom:0.5px solid var(–sep);
+display:flex;flex-direction:column;gap:6px;
 }
-.card-dot{width:6px;height:6px;border-radius:50%;background:var(–ac);}
-
-/* ═══ INPUTS ═══ */
-.fg{margin-bottom:14px;}.fg:last-child{margin-bottom:0;}
-.fl{
-display:block;font-size:11px;font-weight:700;
-letter-spacing:0.08em;text-transform:uppercase;
-color:var(–t1);margin-bottom:6px;
-}
+.card-row:last-child{border-bottom:none;}
+.card-row.horiz{flex-direction:row;align-items:center;gap:10px;}
+.fl{font-size:13px;font-weight:500;color:var(–t1);min-width:80px;flex-shrink:0;}
 .fi{
-width:100%;padding:14px 16px;
+flex:1;width:100%;padding:0;
+background:transparent;border:none;
+color:var(–t0);font-size:17px;
+font-family:‘Inter’,-apple-system,sans-serif;font-weight:400;
+outline:none;-webkit-appearance:none;
+text-align:right;
+}
+.fi::placeholder{color:var(–t3);}
+
+/* ═══ TOGGLE — iOS Segmented Control ═══ */
+.seg-wrap{
+margin:0 16px;
 background:var(–s2);
-border:1px solid var(–s3);
-border-radius:10px;
-color:var(–t0);font-size:16px;
-font-family:‘Instrument Sans’,sans-serif;font-weight:500;
-outline:none;transition:all 0.15s;
--webkit-appearance:none;
+border-radius:9px;
+padding:2px;
+display:grid;grid-template-columns:1fr 1fr;
+gap:0;
 }
-.fi:focus{border-color:var(–ac);box-shadow:0 0 0 3px rgba(127,191,174,0.12);}
-.fi::placeholder{color:var(–t2);}
-.fi.mono{font-family:‘DM Mono’,monospace;font-size:15px;letter-spacing:0.04em;}
-
-/* ═══ TOGGLE ═══ */
-.trow{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.tbtn{
-padding:20px 16px;text-align:center;
-background:var(–s2);
-border:1.5px solid var(–s3);
-border-radius:12px;
-font-family:‘Instrument Sans’,sans-serif;
-font-size:20px;font-weight:700;letter-spacing:0.1em;
-color:var(–t1);
-cursor:pointer;transition:all 0.12s;
+.seg-btn{
+padding:10px;text-align:center;
+border-radius:7px;border:none;
+font-family:‘Inter’,-apple-system,sans-serif;
+font-size:13px;font-weight:600;
+color:var(–t1);background:transparent;
+cursor:pointer;transition:all 0.15s;
 }
-.tbtn .tsub{font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-top:4px;color:var(–t2);}
-.tbtn:active{transform:scale(0.97);}
-
-#tAra.on{
-background:var(–ac);color:var(–k);border-color:var(–ac);
-box-shadow:0 4px 16px rgba(127,191,174,0.2);
+.seg-btn.on{
+color:var(–t0);
+background:var(–s3);
+box-shadow:0 1px 4px rgba(0,0,0,0.3), 0 0 1px rgba(0,0,0,0.2);
 }
-#tAra.on .tsub{color:rgba(0,0,0,0.45);}
-
-#tSon.on{
-background:var(–ac-m);color:var(–ac);border-color:var(–ac);
-}
-#tSon.on .tsub{color:var(–ac);opacity:0.6;}
 
 /* ═══ QUANTITY ═══ */
-.qrow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
-.qbox{text-align:center;}
-.qbox .fl{text-align:center;}
+.qty-card{margin:0 16px;background:var(–s1);border-radius:var(–r);overflow:hidden;}
+.qty-row{display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:0.5px solid var(–sep);}
+.qty-box{text-align:center;padding:16px 8px;border-right:0.5px solid var(–sep);}
+.qty-box:last-child{border-right:none;}
+.qty-label{font-size:11px;font-weight:600;color:var(–t1);text-transform:uppercase;letter-spacing:0.02em;margin-bottom:8px;}
 .qi{
-width:100%;text-align:center;font-family:‘DM Mono’,monospace;
-font-size:26px;font-weight:500;padding:20px 8px;
-background:var(–s2);border:1px solid var(–s3);border-radius:12px;
-color:var(–t0);outline:none;transition:all 0.15s;
+width:100%;text-align:center;
+font-family:‘Inter’,-apple-system,sans-serif;
+font-size:28px;font-weight:700;
+padding:0;background:transparent;border:none;
+color:var(–t0);outline:none;
 -webkit-appearance:none;-moz-appearance:textfield;
 }
 .qi::-webkit-inner-spin-button,.qi::-webkit-outer-spin-button{-webkit-appearance:none;}
-.qi:focus{border-color:var(–ac);box-shadow:0 0 0 3px rgba(127,191,174,0.12);}
+.qi::placeholder{color:var(–t3);}
 
-.qbox.auto .qi{background:var(–ac-d);border-color:rgba(127,191,174,0.25);color:var(–ac);}
-.qbox.iade-r .qi{background:var(–al-d);border-color:rgba(212,128,110,0.25);color:var(–al);}
-.qtag{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-top:7px;color:var(–t2);}
-.qtag.qtag-ac{color:var(–ac);}
-.qtag.qtag-al{color:var(–al);}
+/* İade special states */
+.qty-box.auto .qi{color:var(–t2);}
+.qty-box.iade-r .qi{color:var(–red);}
+.qty-box.iade-r .qty-label{color:var(–red);}
+.qty-tag{font-size:10px;font-weight:600;margin-top:6px;color:var(–t3);}
+.qty-tag.qtag-ok{color:var(–blue);}
+.qty-tag.qtag-al{color:var(–red);}
 
-.steppers{display:flex;justify-content:center;gap:8px;margin-top:8px;}
+.steppers{display:flex;justify-content:center;gap:0;border-top:0.5px solid var(–sep);}
+.stepper-group{display:flex;align-items:center;flex:1;justify-content:center;padding:4px 0;border-right:0.5px solid var(–sep);}
+.stepper-group:last-child{border-right:none;}
+.stepper-group .sg-label{font-size:10px;color:var(–t2);font-weight:600;margin-right:8px;text-transform:uppercase;}
 .sbtn{
-width:44px;height:36px;border-radius:9px;
-border:1px solid var(–s3);background:var(–s2);
-color:var(–t0);font-size:16px;font-weight:500;
-font-family:‘DM Mono’,monospace;
-cursor:pointer;display:grid;place-items:center;transition:all 0.1s;
+width:44px;height:36px;border-radius:8px;
+border:none;background:var(–s2);
+color:var(–blue);font-size:18px;font-weight:600;
+font-family:‘Inter’,-apple-system,sans-serif;
+cursor:pointer;display:grid;place-items:center;
+transition:all 0.08s;margin:0 2px;
 }
-.sbtn:active{background:var(–ac-d);color:var(–ac);border-color:rgba(127,191,174,0.25);}
+.sbtn:active{background:var(–blue-d);transform:scale(0.95);}
 
-/* ═══ SAVE ═══ */
-.save-area{padding:18px 16px 0;}
+/* ═══ SAVE — iOS Primary Button ═══ */
+.save-area{padding:20px 16px 0;}
 .save-btn{
-width:100%;padding:19px;border:none;border-radius:var(–r);
-background:var(–ac);color:var(–k);
-font-family:‘Instrument Sans’,sans-serif;
-font-size:14px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
-cursor:pointer;transition:all 0.1s;
-display:flex;align-items:center;justify-content:center;gap:10px;
-min-height:58px;
-box-shadow:0 4px 20px rgba(127,191,174,0.18);
+width:100%;padding:16px;border:none;border-radius:var(–r);
+background:var(–blue);color:var(–t0);
+font-family:‘Inter’,-apple-system,sans-serif;
+font-size:17px;font-weight:600;
+cursor:pointer;transition:all 0.08s;
+display:flex;align-items:center;justify-content:center;gap:8px;
+min-height:50px;
 }
-.save-btn:active{transform:scale(0.98);opacity:0.85;}
-.save-btn.flash{animation:svfl 0.35s ease;}
-@keyframes svfl{0%{transform:scale(1);}20%{transform:scale(0.97);}60%{transform:scale(1.01);}100%{transform:scale(1);}}
+.save-btn:active{opacity:0.7;transform:scale(0.98);}
+.save-btn.flash{animation:svfl 0.3s ease;}
+@keyframes svfl{0%{transform:scale(1);}15%{transform:scale(0.97);}50%{transform:scale(1.01);}100%{transform:scale(1);}}
 
 /* ═══ RECORDS ═══ */
 .stats-grid{
 display:grid;grid-template-columns:repeat(3,1fr);
 background:var(–s1);
-border-bottom:1px solid var(–sep);
+border-bottom:0.5px solid var(–sep);
 padding:16px 20px;
 }
 .stat-c{text-align:center;}
-.stat-v{font-family:‘DM Mono’,monospace;font-size:24px;font-weight:500;color:var(–t0);}
-.stat-v.s-ok{color:var(–ac);}
-.stat-v.s-ret{color:var(–al);}
-.stat-l{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(–t1);margin-top:3px;}
+.stat-v{font-size:24px;font-weight:700;color:var(–t0);}
+.stat-v.s-ok{color:var(–green);}
+.stat-v.s-ret{color:var(–red);}
+.stat-l{font-size:11px;font-weight:600;color:var(–t1);margin-top:2px;}
 
-.filters{display:flex;gap:8px;padding:14px 16px;border-bottom:1px solid var(–sep);}
+.filters{display:flex;gap:8px;padding:12px 16px;border-bottom:0.5px solid var(–sep);}
 .fp{
-padding:10px 20px;border-radius:99px;
-font-size:11px;font-weight:700;letter-spacing:0.04em;
-color:var(–t1);background:var(–s2);
-border:1px solid var(–s3);
+padding:8px 18px;border-radius:99px;
+font-size:13px;font-weight:600;
+color:var(–t2);background:var(–s2);
+border:none;
 cursor:pointer;transition:all 0.12s;
-font-family:‘Instrument Sans’,sans-serif;text-transform:uppercase;
+font-family:‘Inter’,-apple-system,sans-serif;
 }
-.fp.on{color:var(–k);background:var(–ac);border-color:var(–ac);box-shadow:0 2px 8px rgba(127,191,174,0.15);}
+.fp.on{color:var(–t0);background:var(–blue);}
 
-.recs{padding:10px 16px;}
+.recs{padding:8px 16px;}
 .rec{
-background:var(–s1);border:1px solid var(–sep);
-border-radius:var(–r);padding:18px;margin-bottom:10px;
-transition:background 0.1s;
+background:var(–s1);
+border-radius:var(–r);padding:16px;margin-bottom:8px;
+transition:background 0.08s;
 }
 .rec:active{background:var(–s2);}
-.rec-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;}
-.rec-name{font-size:17px;font-weight:700;color:var(–t0);line-height:1.2;}
-.rec-sub{font-family:‘DM Mono’,monospace;font-size:11px;color:var(–t1);margin-top:4px;}
+.rec-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
+.rec-name{font-size:17px;font-weight:600;color:var(–t0);line-height:1.3;}
+.rec-sub{font-size:13px;color:var(–t1);margin-top:2px;}
 
-.bdg{font-size:9px;font-weight:700;letter-spacing:0.06em;padding:5px 10px;border-radius:6px;text-transform:uppercase;white-space:nowrap;}
-.bdg.b-ara{background:var(–ac-d);color:var(–ac);}
-.bdg.b-son{background:var(–ac-d);color:var(–ac);opacity:0.75;}
-.bdg.b-ok{background:rgba(127,191,174,0.08);color:var(–ac);}
-.bdg.b-iade{background:var(–al-d);color:var(–al);}
+.bdg{font-size:11px;font-weight:600;padding:3px 8px;border-radius:5px;white-space:nowrap;}
+.bdg.b-ara{background:var(–blue-d);color:var(–blue);}
+.bdg.b-son{background:rgba(255,159,10,0.12);color:#FF9F0A;}
+.bdg.b-ok{background:var(–green-d);color:var(–green);}
+.bdg.b-iade{background:var(–red-d);color:var(–red);}
 
-.rec-nums{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;}
-.rn-lb{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(–t1);}
-.rn-vl{font-family:‘DM Mono’,monospace;font-size:18px;font-weight:500;color:var(–t0);}
-.rn-vl.v-ok{color:var(–ac);}
-.rn-vl.v-ret{color:var(–al);}
-.rec-time{font-size:10px;color:var(–t1);}
-.rec-foot{display:flex;gap:8px;padding-top:12px;margin-top:12px;border-top:1px solid var(–sep);}
+.rec-nums{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px;}
+.rn-lb{font-size:11px;font-weight:600;color:var(–t1);}
+.rn-vl{font-size:20px;font-weight:700;color:var(–t0);}
+.rn-vl.v-ok{color:var(–green);}
+.rn-vl.v-ret{color:var(–red);}
+.rec-time{font-size:13px;color:var(–t2);}
+.rec-foot{display:flex;gap:8px;padding-top:10px;margin-top:10px;border-top:0.5px solid var(–sep);}
 .rbtn{
-flex:1;padding:12px;border-radius:9px;
-border:1px solid var(–s3);background:var(–s2);
-font-size:10px;font-weight:700;color:var(–t0);
-font-family:‘Instrument Sans’,sans-serif;letter-spacing:0.06em;text-transform:uppercase;
-cursor:pointer;transition:all 0.1s;
+flex:1;padding:10px;border-radius:8px;
+border:none;background:var(–s2);
+font-size:13px;font-weight:600;color:var(–blue);
+font-family:‘Inter’,-apple-system,sans-serif;
+cursor:pointer;transition:all 0.08s;
 min-height:44px;display:flex;align-items:center;justify-content:center;
 }
-.rbtn:active{background:var(–ac-d);color:var(–ac);}
-.rbtn.del{color:var(–al);}
-.rbtn.del:active{background:var(–al-d);color:var(–al);}
+.rbtn:active{background:var(–blue-d);}
+.rbtn.del{color:var(–red);}
+.rbtn.del:active{background:var(–red-d);}
 
 /* ═══ EXPORT ═══ */
 .exp-area{padding:16px;}
 .exp-card{
-background:var(–s1);border:1px solid var(–sep);
-border-radius:var(–r);padding:30px 20px;text-align:center;
+background:var(–s1);
+border-radius:var(–r);padding:28px 20px;text-align:center;
 }
-.exp-tt{font-size:20px;font-weight:700;color:var(–t0);margin-bottom:8px;}
-.exp-desc{font-size:13px;color:var(–t1);line-height:1.7;margin-bottom:24px;}
+.exp-tt{font-size:20px;font-weight:700;color:var(–t0);margin-bottom:6px;}
+.exp-desc{font-size:15px;color:var(–t1);line-height:1.6;margin-bottom:24px;}
 .exp-btns{display:flex;flex-direction:column;gap:10px;}
 .btn-e{
-width:100%;padding:16px;border-radius:var(–r);
-font-family:‘Instrument Sans’,sans-serif;
-font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
-cursor:pointer;transition:all 0.1s;
+width:100%;padding:14px;border-radius:var(–r);
+font-family:‘Inter’,-apple-system,sans-serif;
+font-size:17px;font-weight:600;
+cursor:pointer;transition:all 0.08s;
 display:flex;align-items:center;justify-content:center;gap:8px;
-min-height:54px;border:none;
+min-height:50px;border:none;
 }
-.btn-e:active{transform:scale(0.98);}
-.btn-e.pri{background:var(–ac);color:var(–k);box-shadow:0 4px 16px rgba(127,191,174,0.15);}
-.btn-e.sec{background:var(–s2);color:var(–t0);border:1px solid var(–s3);}
-.btn-e.dan{background:var(–al-d);color:var(–al);border:1px solid rgba(212,128,110,0.15);}
+.btn-e:active{opacity:0.7;transform:scale(0.98);}
+.btn-e.pri{background:var(–blue);color:var(–t0);}
+.btn-e.sec{background:var(–s2);color:var(–blue);}
+.btn-e.dan{background:var(–red-d);color:var(–red);}
 
-.prev-wrap{margin-top:18px;background:var(–s1);border:1px solid var(–sep);border-radius:var(–r);overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.prev-wrap{margin-top:16px;background:var(–s1);border-radius:var(–r);overflow-x:auto;-webkit-overflow-scrolling:touch;}
 .prev-t{width:100%;border-collapse:collapse;white-space:nowrap;}
-.prev-t th{padding:10px;text-align:left;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(–ac);border-bottom:1px solid var(–sep);}
-.prev-t td{padding:10px;font-family:‘DM Mono’,monospace;font-size:11px;color:var(–t1);border-bottom:1px solid var(–sep);}
-.prev-t td.n{font-family:‘Instrument Sans’,sans-serif;font-weight:700;color:var(–t0);}
+.prev-t th{padding:10px 12px;text-align:left;font-size:11px;font-weight:600;color:var(–t1);border-bottom:0.5px solid var(–sep);}
+.prev-t td{padding:10px 12px;font-size:13px;color:var(–t1);border-bottom:0.5px solid var(–sep);}
+.prev-t td.n{font-weight:600;color:var(–t0);}
 
-.empty{text-align:center;padding:50px 20px;}.empty-tx{font-size:14px;color:var(–t1);line-height:1.7;}
+.empty{text-align:center;padding:50px 20px;}.empty-tx{font-size:15px;color:var(–t2);line-height:1.6;}
 
 .toast{
 position:fixed;bottom:calc(30px + var(–sab));left:50%;
 transform:translateX(-50%) translateY(14px);
-background:var(–ac);color:var(–k);
-padding:13px 28px;border-radius:99px;
-font-size:14px;font-weight:700;
+background:var(–s2);color:var(–t0);
+padding:14px 24px;border-radius:var(–r);
+font-size:15px;font-weight:600;
 opacity:0;pointer-events:none;
-transition:all 0.18s;z-index:200;white-space:nowrap;
-box-shadow:0 4px 24px rgba(127,191,174,0.2);
+transition:all 0.2s;z-index:200;white-space:nowrap;
+box-shadow:0 8px 32px rgba(0,0,0,0.4);
 }
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0);}
 
-.sflash{position:fixed;inset:0;background:rgba(127,191,174,0.04);pointer-events:none;opacity:0;transition:opacity 0.12s;z-index:100;}.sflash.on{opacity:1;}
+.sflash{position:fixed;inset:0;background:rgba(0,122,255,0.04);pointer-events:none;opacity:0;transition:opacity 0.12s;z-index:100;}.sflash.on{opacity:1;}
 
-::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-track{background:var(–k);}::-webkit-scrollbar-thumb{background:var(–s3);border-radius:2px;}
-::selection{background:rgba(127,191,174,0.2);color:var(–t0);}
+::-webkit-scrollbar{width:0;height:0;}
+::selection{background:rgba(0,122,255,0.2);color:var(–t0);}
 </style>
 
 </head>
@@ -351,9 +353,9 @@ box-shadow:0 4px 24px rgba(127,191,174,0.2);
 </header>
 
 <div class="tabs">
-  <button class="tab on" data-t="form" onclick="goTab('form')">＋ Giriş</button>
+  <button class="tab on" data-t="form" onclick="goTab('form')">Yeni Giriş</button>
   <button class="tab" data-t="recs" onclick="goTab('recs')">Kayıtlar</button>
-  <button class="tab" data-t="exp" onclick="goTab('exp')">Aktar</button>
+  <button class="tab" data-t="exp" onclick="goTab('exp')">Dışa Aktar</button>
 </div>
 
 <div class="sess">
@@ -364,36 +366,51 @@ box-shadow:0 4px 24px rgba(127,191,174,0.2);
 
 <div class="main">
 
+<!-- FORM -->
+
 <div class="tc on" id="tc-form">
+
+  <div class="sec-title">Parça Bilgileri</div>
   <div class="card">
-    <div class="card-head"><span class="card-dot"></span>Parça Bilgileri</div>
-    <div class="fg"><label class="fl">Parça Adı</label><input class="fi" id="fAdi" type="text" placeholder="Bağlantı Flanşı" autocomplete="off" oninput="markDirty()"></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-      <div class="fg"><label class="fl">Parça No</label><input class="fi mono" id="fNo" type="text" placeholder="FN-3842-A" autocomplete="off" oninput="markDirty()"></div>
-      <div class="fg"><label class="fl">Revizyon</label><input class="fi mono" id="fRev" type="text" placeholder="Rev.C" autocomplete="off" oninput="markDirty()"></div>
-    </div>
-    <div class="fg"><label class="fl">Sipariş No</label><input class="fi mono" id="fSip" type="text" placeholder="SIP-2026-0154" autocomplete="off" oninput="markDirty()"></div>
+    <div class="card-row horiz"><span class="fl">Parça Adı</span><input class="fi" id="fAdi" type="text" placeholder="Bağlantı Flanşı" autocomplete="off" oninput="markDirty()"></div>
+    <div class="card-row horiz"><span class="fl">Parça No</span><input class="fi" id="fNo" type="text" placeholder="FN-3842-A" autocomplete="off" oninput="markDirty()"></div>
+    <div class="card-row horiz"><span class="fl">Sipariş No</span><input class="fi" id="fSip" type="text" placeholder="SIP-2026-0154" autocomplete="off" oninput="markDirty()"></div>
+    <div class="card-row horiz"><span class="fl">Revizyon</span><input class="fi" id="fRev" type="text" placeholder="Rev.C" autocomplete="off" oninput="markDirty()"></div>
   </div>
 
-  <div class="card">
-    <div class="card-head"><span class="card-dot"></span>Denetim Türü</div>
-    <div class="trow">
-      <button class="tbtn" id="tAra" onclick="pickType('ARA')">ARA<div class="tsub">Ara Denetim</div></button>
-      <button class="tbtn" id="tSon" onclick="pickType('SON')">SON<div class="tsub">Son Denetim</div></button>
+  <div class="sec-title">Denetim Türü</div>
+  <div class="seg-wrap">
+    <button class="seg-btn" id="tAra" onclick="pickType('ARA')">Ara Denetim</button>
+    <button class="seg-btn" id="tSon" onclick="pickType('SON')">Son Denetim</button>
+  </div>
+
+  <div class="sec-title">Miktar Bilgileri</div>
+  <div class="qty-card">
+    <div class="qty-row">
+      <div class="qty-box">
+        <div class="qty-label">Sunulan</div>
+        <input class="qi" id="fSun" type="number" inputmode="numeric" pattern="[0-9]*" value="" placeholder="0" oninput="calc();markDirty()">
+      </div>
+      <div class="qty-box">
+        <div class="qty-label">Uygun</div>
+        <input class="qi" id="fUyg" type="number" inputmode="numeric" pattern="[0-9]*" value="" placeholder="0" oninput="calc();markDirty()">
+      </div>
+      <div class="qty-box auto" id="qIade">
+        <div class="qty-label">İade</div>
+        <input class="qi" id="fIade" type="number" value="0" readonly>
+        <div class="qty-tag qtag-ok" id="iadeTag">Otomatik</div>
+      </div>
+    </div>
+    <div class="steppers">
+      <div class="stepper-group"><span class="sg-label">Sun</span><button class="sbtn" onclick="step('fSun',-1)">−</button><button class="sbtn" onclick="step('fSun',1)">+</button></div>
+      <div class="stepper-group"><span class="sg-label">Uyg</span><button class="sbtn" onclick="step('fUyg',-1)">−</button><button class="sbtn" onclick="step('fUyg',1)">+</button></div>
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-head"><span class="card-dot"></span>Miktar</div>
-    <div class="qrow">
-      <div class="qbox"><label class="fl">Sunulan</label><input class="qi" id="fSun" type="number" inputmode="numeric" pattern="[0-9]*" value="" placeholder="—" oninput="calc();markDirty()"><div class="steppers"><button class="sbtn" onclick="step('fSun',-1)">−</button><button class="sbtn" onclick="step('fSun',1)">+</button></div></div>
-      <div class="qbox"><label class="fl">Uygun</label><input class="qi" id="fUyg" type="number" inputmode="numeric" pattern="[0-9]*" value="" placeholder="—" oninput="calc();markDirty()"><div class="steppers"><button class="sbtn" onclick="step('fUyg',-1)">−</button><button class="sbtn" onclick="step('fUyg',1)">+</button></div></div>
-      <div class="qbox auto" id="qIade"><label class="fl">İade</label><input class="qi" id="fIade" type="number" value="0" readonly><div class="qtag qtag-ac" id="iadeTag">⚡ Otomatik</div></div>
-    </div>
-  </div>
-
-  <div class="save-area"><button class="save-btn" id="saveBtn" onclick="save()">Kaydet & Yeni&ensp;→</button></div>
+  <div class="save-area"><button class="save-btn" id="saveBtn" onclick="save()">Kaydet ve Yeni Giriş</button></div>
 </div>
+
+<!-- RECORDS -->
 
 <div class="tc" id="tc-recs">
   <div class="stats-grid">
@@ -409,19 +426,21 @@ box-shadow:0 4px 24px rgba(127,191,174,0.2);
   <div class="recs" id="recsList"></div>
 </div>
 
+<!-- EXPORT -->
+
 <div class="tc" id="tc-exp">
   <div class="exp-area">
     <div class="exp-card">
       <div class="exp-tt">Dışa Aktar</div>
-      <div class="exp-desc">Verilerinizi CSV olarak indirin veya panoya kopyalayıp Excel'e yapıştırın.</div>
+      <div class="exp-desc">Denetim verilerinizi CSV olarak indirin veya panoya kopyalayıp Excel'e yapıştırın.</div>
       <div class="exp-btns">
-        <button class="btn-e pri" onclick="dlCSV()">↓&ensp;CSV İndir</button>
-        <button class="btn-e sec" onclick="copyAll()">◫&ensp;Tümünü Kopyala</button>
-        <button class="btn-e dan" onclick="clearAll()">✕&ensp;Kayıtları Sil</button>
+        <button class="btn-e pri" onclick="dlCSV()">CSV İndir</button>
+        <button class="btn-e sec" onclick="copyAll()">Tümünü Kopyala</button>
+        <button class="btn-e dan" onclick="clearAll()">Kayıtları Sil</button>
       </div>
     </div>
     <div style="margin-top:16px;">
-      <div style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--t1);margin-bottom:8px;">Önizleme</div>
+      <div class="sec-title" style="padding-left:0;">Önizleme</div>
       <div class="prev-wrap"><table class="prev-t"><thead><tr><th>Adı</th><th>No</th><th>Sipariş</th><th>Rev</th><th>Tür</th><th>Sun</th><th>Uyg</th><th>İade</th></tr></thead><tbody id="prevBody"></tbody></table></div>
     </div>
   </div>
@@ -436,16 +455,19 @@ try{const s=localStorage.getItem('3dd_r');if(s)R=JSON.parse(s);}catch(e){}
 (function(){updBadge();updSession();document.getElementById('sDate').textContent=new Date().toLocaleDateString('tr-TR',{weekday:'long',day:'numeric',month:'long'});})();
 
 function goTab(t){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));document.querySelector(`[data-t="${t}"]`).classList.add('on');document.querySelectorAll('.tc').forEach(x=>x.classList.remove('on'));document.getElementById('tc-'+t).classList.add('on');if(t==='recs')renderRecs();if(t==='exp')renderPrev();window.scrollTo({top:0,behavior:'smooth'});}
+
 function pickType(t){type=t;document.getElementById('tAra').classList.toggle('on',t==='ARA');document.getElementById('tSon').classList.toggle('on',t==='SON');if(navigator.vibrate)navigator.vibrate(6);markDirty();}
-function calc(){const s=p('fSun'),u=p('fUyg'),iade=Math.max(0,s-u);document.getElementById('fIade').value=iade;const q=document.getElementById('qIade'),tag=document.getElementById('iadeTag');if(iade>0){q.classList.add('iade-r');q.classList.remove('auto');tag.textContent='⚠ İade Var';tag.className='qtag qtag-al';}else{q.classList.remove('iade-r');q.classList.add('auto');tag.textContent='⚡ Otomatik';tag.className='qtag qtag-ac';}}
+
+function calc(){const s=p('fSun'),u=p('fUyg'),iade=Math.max(0,s-u);document.getElementById('fIade').value=iade;const q=document.getElementById('qIade'),tag=document.getElementById('iadeTag');if(iade>0){q.classList.add('iade-r');q.classList.remove('auto');tag.textContent='⚠ İade Var';tag.className='qty-tag qtag-al';}else{q.classList.remove('iade-r');q.classList.add('auto');tag.textContent='Otomatik';tag.className='qty-tag qtag-ok';}}
 function p(id){return parseInt(document.getElementById(id).value)||0;}
 function step(id,d){const el=document.getElementById(id);el.value=Math.max(0,(parseInt(el.value)||0)+d);calc();markDirty();if(navigator.vibrate)navigator.vibrate(4);}
 function markDirty(){document.getElementById('unsavedTag').style.display='inline';}
 function clearDirty(){document.getElementById('unsavedTag').style.display='none';}
+
 function save(){
   const adi=v('fAdi'),no=v('fNo'),sip=v('fSip'),rev=v('fRev'),sun=p('fSun'),uyg=p('fUyg'),iade=Math.max(0,sun-uyg);
   if(!adi){toast('Parça adı girin');document.getElementById('fAdi').focus();return;}
-  if(!type){toast('ARA veya SON seçin');return;}
+  if(!type){toast('Denetim türü seçin');return;}
   if(sun<=0){toast('Sunulan miktar girin');document.getElementById('fSun').focus();return;}
   R.unshift({id:Date.now(),parcaAdi:adi,parcaNo:no,siparisNo:sip,revizyon:rev,tur:type,sunulan:sun,uygun:uyg,iade,tarih:new Date().toLocaleString('tr-TR')});
   persist();updBadge();updSession();
@@ -456,7 +478,8 @@ function save(){
   setTimeout(()=>document.getElementById('fAdi').focus(),100);
 }
 function v(id){return document.getElementById(id).value.trim();}
-function clearForm(){['fAdi','fNo','fSip','fRev','fSun','fUyg'].forEach(id=>document.getElementById(id).value='');document.getElementById('fIade').value='0';document.getElementById('qIade').classList.remove('iade-r');document.getElementById('qIade').classList.add('auto');document.getElementById('iadeTag').textContent='⚡ Otomatik';document.getElementById('iadeTag').className='qtag qtag-ac';}
+function clearForm(){['fAdi','fNo','fSip','fRev','fSun','fUyg'].forEach(id=>document.getElementById(id).value='');document.getElementById('fIade').value='0';document.getElementById('qIade').classList.remove('iade-r');document.getElementById('qIade').classList.add('auto');document.getElementById('iadeTag').textContent='Otomatik';document.getElementById('iadeTag').className='qty-tag qtag-ok';}
+
 function renderRecs(){
   const list=document.getElementById('recsList'),F=filter==='all'?R:R.filter(r=>r.tur===filter);
   document.getElementById('svTot').textContent=R.reduce((a,r)=>a+r.sunulan,0);
@@ -464,7 +487,7 @@ function renderRecs(){
   document.getElementById('svRet').textContent=R.reduce((a,r)=>a+r.iade,0);
   if(!F.length){list.innerHTML=`<div class="empty"><div class="empty-tx">${R.length?'Bu filtrede kayıt yok.':'Henüz kayıt yok.'}</div></div>`;return;}
   list.innerHTML=F.map(r=>{const ok=r.iade===0;const idx=R.indexOf(r);
-    return `<div class="rec"><div class="rec-top"><div><div class="rec-name">${esc(r.parcaAdi)}</div><div class="rec-sub">${esc(r.parcaNo)}${r.siparisNo?' · '+esc(r.siparisNo):''}${r.revizyon?' · '+esc(r.revizyon):''}</div></div><div style="display:flex;gap:5px;"><span class="bdg b-${r.tur.toLowerCase()}">${r.tur}</span><span class="bdg ${ok?'b-ok':'b-iade'}">${ok?'✓ Tam':'↩ İade'}</span></div></div><div class="rec-nums"><div><div class="rn-lb">Sunulan</div><div class="rn-vl">${r.sunulan}</div></div><div><div class="rn-lb">Uygun</div><div class="rn-vl v-ok">${r.uygun}</div></div><div><div class="rn-lb">İade</div><div class="rn-vl${r.iade>0?' v-ret':''}">${r.iade}</div></div></div><div class="rec-time">${r.tarih}</div><div class="rec-foot"><button class="rbtn" onclick="copyRow(${idx})">◫ Kopyala</button><button class="rbtn del" onclick="delRec(${idx})">✕ Sil</button></div></div>`;}).join('');
+    return `<div class="rec"><div class="rec-top"><div><div class="rec-name">${esc(r.parcaAdi)}</div><div class="rec-sub">${esc(r.parcaNo)}${r.siparisNo?' · '+esc(r.siparisNo):''}${r.revizyon?' · '+esc(r.revizyon):''}</div></div><div style="display:flex;gap:4px;"><span class="bdg b-${r.tur.toLowerCase()}">${r.tur==='ARA'?'Ara':'Son'}</span><span class="bdg ${ok?'b-ok':'b-iade'}">${ok?'✓ Tam':'↩ İade'}</span></div></div><div class="rec-nums"><div><div class="rn-lb">Sunulan</div><div class="rn-vl">${r.sunulan}</div></div><div><div class="rn-lb">Uygun</div><div class="rn-vl v-ok">${r.uygun}</div></div><div><div class="rn-lb">İade</div><div class="rn-vl${r.iade>0?' v-ret':''}">${r.iade}</div></div></div><div class="rec-time">${r.tarih}</div><div class="rec-foot"><button class="rbtn" onclick="copyRow(${idx})">Kopyala</button><button class="rbtn del" onclick="delRec(${idx})">Sil</button></div></div>`;}).join('');
 }
 function setFilter(f){filter=f;document.querySelectorAll('.fp').forEach(x=>x.classList.toggle('on',x.dataset.f===f));renderRecs();}
 function copyRow(i){const r=R[i];cpToClip([r.parcaAdi,r.parcaNo,r.siparisNo,r.revizyon,r.tur,r.sunulan,r.uygun,r.iade].join('\t'));toast('Satır kopyalandı');}
@@ -472,7 +495,7 @@ function delRec(i){R.splice(i,1);persist();updBadge();updSession();renderRecs();
 function dlCSV(){if(!R.length){toast('Kayıt yok');return;}const BOM='\uFEFF',h='Parça Adı;Parça Numarası;Sipariş Numarası;Revizyon;Denetim Türü;Sunulan;Uygun;İade;Tarih\n',rows=R.map(r=>`${r.parcaAdi};${r.parcaNo};${r.siparisNo};${r.revizyon};${r.tur};${r.sunulan};${r.uygun};${r.iade};${r.tarih}`).join('\n');const blob=new Blob([BOM+h+rows],{type:'text/csv;charset=utf-8;'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`FNSS_TEKNOKAR_${new Date().toISOString().split('T')[0]}.csv`;a.click();URL.revokeObjectURL(a.href);toast('CSV indirildi');}
 function copyAll(){if(!R.length){toast('Kayıt yok');return;}const h='Parça Adı\tParça No\tSipariş No\tRevizyon\tTür\tSunulan\tUygun\tİade',rows=R.map(r=>[r.parcaAdi,r.parcaNo,r.siparisNo,r.revizyon,r.tur,r.sunulan,r.uygun,r.iade].join('\t'));cpToClip(h+'\n'+rows.join('\n'));toast('Tümü kopyalandı');}
 function clearAll(){if(!confirm('Tüm kayıtlar silinecek?'))return;R=[];persist();updBadge();updSession();renderPrev();toast('Silindi');}
-function renderPrev(){const tb=document.getElementById('prevBody');if(!R.length){tb.innerHTML='<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--t1);">—</td></tr>';return;}tb.innerHTML=R.slice(0,25).map(r=>`<tr><td class="n">${esc(r.parcaAdi)}</td><td>${esc(r.parcaNo)}</td><td>${esc(r.siparisNo)}</td><td>${esc(r.revizyon)}</td><td>${r.tur}</td><td style="text-align:center">${r.sunulan}</td><td style="text-align:center;color:var(--ac)">${r.uygun}</td><td style="text-align:center;color:${r.iade>0?'var(--al)':'var(--t2)'};font-weight:${r.iade>0?'700':'400'}">${r.iade}</td></tr>`).join('');}
+function renderPrev(){const tb=document.getElementById('prevBody');if(!R.length){tb.innerHTML='<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--t2);">—</td></tr>';return;}tb.innerHTML=R.slice(0,25).map(r=>`<tr><td class="n">${esc(r.parcaAdi)}</td><td>${esc(r.parcaNo)}</td><td>${esc(r.siparisNo)}</td><td>${esc(r.revizyon)}</td><td>${r.tur}</td><td style="text-align:center">${r.sunulan}</td><td style="text-align:center;color:var(--green)">${r.uygun}</td><td style="text-align:center;color:${r.iade>0?'var(--red)':'var(--t2)'};font-weight:${r.iade>0?'700':'400'}">${r.iade}</td></tr>`).join('');}
 function persist(){try{localStorage.setItem('3dd_r',JSON.stringify(R));}catch(e){}}
 function updBadge(){document.getElementById('hBadge').textContent=R.length;}
 function updSession(){const today=new Date().toDateString();const c=R.filter(r=>{try{return new Date(r.tarih.split(' ')[0].split('.').reverse().join('-')).toDateString()===today;}catch(e){return false;}}).length;document.getElementById('sCount').textContent='Bugün: '+c;}
